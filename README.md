@@ -3,7 +3,11 @@
 
 
 
+# Front-End Repository 
+- link https://github.com/HasanMdKamrul/product-catalouge-fe
 
+# Back-End Repository 
+- link https://github.com/HasanMdKamrul/Products-catalogue-server-python
 
 # Running Instructions using docker-compose.yaml file
 
