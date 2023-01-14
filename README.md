@@ -1,6 +1,12 @@
 # Product Catalouge  Application
 ## Md Kamrul Hasan
 
+# Links of all Repository 
+- https://drive.google.com/file/d/1pPQkGnWx8nExRGeF7AG55O_AOIuxX8kz/view?usp=sharing
+
+
+# Combained Repository 
+- link https://github.com/HasanMdKamrul/Sasol-product-catalouge
 
 
 # Front-End Repository 
@@ -36,3 +42,8 @@
 - Both the images should be running in order to see the results 
 
 
+## Links of the apis 
+- all products -http://localhost:8000/api/products/
+- product detail -http://localhost:8000/api/products/1/
+- update -http://localhost:8000/api/products/1/update/
+- add -http://localhost:8000/api/products/add/
