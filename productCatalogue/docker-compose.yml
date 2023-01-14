@@ -1,0 +1,17 @@
+# version: "20"
+
+# services:
+#   web:
+#     build: .
+#     command: python manage.py runserver 0.0.0.0:8000
+#     ports:
+#       - 8000:8000
+
+version: "3"
+
+services:
+  django:
+    image: django-docker:latest
+    build: .
+    ports:
+      - "8000:8000"
