@@ -13,7 +13,7 @@ import { CategoryData } from "../constants/Constants";
 
 const Home = () => {
   const { data, isLoading } = useQuery({
-    queryKey: ["api", "products", "ordering"],
+    queryKey: ["products"],
     queryFn: async () => {
       try {
         const response = await fetch(
