@@ -18,7 +18,7 @@ const Home = () => {
     const loadData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_END_POINT}api/products/?ordering=-id`
+          `http://localhost:8000/api/products/?ordering=-id/`
         );
         const data = await response.json();
 
