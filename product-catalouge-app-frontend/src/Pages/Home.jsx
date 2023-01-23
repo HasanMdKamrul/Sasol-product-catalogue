@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 import Banner from "../components/app/Banner";
 import CategorySlider from "../components/app/CategorySlider";
 import { Investors } from "../components/app/Investors";
@@ -11,37 +12,58 @@ import Slider from "../components/core/Slider";
 import { CategoryData } from "../constants/Constants";
 
 const Home = () => {
-  const [loadingData, setLoadingData] = useState(true);
-  const [products, setProducts] = useState([]);
+  // const [loadingData, setLoadingData] = useState(true);
+  // const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const loadData = async () => {
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8000/api/products/?ordering=-id`
+  //       );
+  //       const data = await response.json();
+
+  //       setProducts(data.results);
+  //       setLoadingData(false);
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   };
+
+  //   loadData();
+  // }, []);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["api", "products", "ordering", "id"],
+    queryFn: async () => {
       try {
         const response = await fetch(
           `http://localhost:8000/api/products/?ordering=-id`
         );
         const data = await response.json();
 
-        setProducts(data.results);
-        setLoadingData(false);
+        // setProducts(data.results);
+        // setLoadingData(false);
+        return data;
       } catch (error) {
         console.log(error.message);
       }
-    };
+    },
+  });
 
-    loadData();
-  }, []);
-
-  if (loadingData) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
+  // if (loadingData) {
+  //   return <LoadingSpinner />;
+  // }
 
   return (
     <>
       <WelcomeText>Welcome to sasol</WelcomeText>
       <Slider />
       <Partners />
-      <HomeSlider products={products} />
+      <HomeSlider products={data?.results} />
       <CategorySlider
         slidesPerView={2}
         heading="Products Category"
