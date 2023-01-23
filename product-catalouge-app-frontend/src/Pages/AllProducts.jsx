@@ -9,7 +9,7 @@ const AllProducts = () => {
   const [previousUrl, setPreviousUrl] = useState(null);
 
   const { isLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["api", "products", "ordering", "id"],
     queryFn: async () => {
       try {
         const response = await fetch(
