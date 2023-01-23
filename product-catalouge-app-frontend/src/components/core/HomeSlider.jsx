@@ -15,7 +15,7 @@ import Heading from "./Heading";
 export default function HomeSlider({ products }) {
   return (
     <>
-      <div className="min-h-screen">
+      <div>
         <Heading>Our Leatest Products</Heading>
         <Swiper
           effect={"coverflow"}

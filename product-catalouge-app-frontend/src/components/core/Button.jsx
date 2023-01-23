@@ -1,7 +1,9 @@
-const Button = ({ children }) => {
+const Button = ({ children, handleButton }) => {
   return (
     <>
-      <button className="btn btn-outline w-full my-2">{children}</button>
+      <button onClick={handleButton} className="btn btn-outline w-full my-2">
+        {children}
+      </button>
     </>
   );
 };

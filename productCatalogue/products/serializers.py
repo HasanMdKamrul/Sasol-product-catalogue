@@ -2,6 +2,7 @@ import datetime
 import locale
 
 import pytz
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Product
@@ -20,6 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = (
             "id",
+            "User",
             "name",
             "description",
             "price",

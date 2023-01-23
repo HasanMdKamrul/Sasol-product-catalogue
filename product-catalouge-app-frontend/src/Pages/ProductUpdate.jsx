@@ -1,56 +1,66 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Button from "../components/core/Button";
 import Heading from "../components/core/Heading";
+import useAuth from "../Hooks/useAuth";
 
 const ProductUpdate = () => {
   const product = useLoaderData();
 
-  console.log(product);
+  const { user } = useAuth();
+
+  // console.log(product);
 
   const { name, description, price, picture, active } = product;
   const navigate = useNavigate();
 
   const [activeState, setActiveState] = useState(active);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const form = e.target;
 
-    const name = form.name.value;
-    const description = form.description.value;
-    const price = form.price.value;
-    const picture = form.picture.value;
+      const name = form.name.value;
+      const description = form.description.value;
+      const price = form.price.value;
+      const picture = form.picture.value;
 
-    const updatedProductObject = {
-      name,
-      description,
-      price,
-      picture,
-      active: activeState,
-    };
+      const updatedProductObject = {
+        User: user?.id,
+        name,
+        description,
+        price,
+        picture,
+        active: activeState,
+      };
 
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/products/${product?.id}/update/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedProductObject),
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_END_POINT}api/products/${product?.id}/update/`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify(updatedProductObject),
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          toast.success("Product Updated");
+          navigate("/allproducts");
         }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        navigate("/allproducts");
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    },
+    [activeState, navigate, product?.id, user?.id]
+  );
 
   return (
     <>

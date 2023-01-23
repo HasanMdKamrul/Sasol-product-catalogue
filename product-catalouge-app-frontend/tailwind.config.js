@@ -5,7 +5,14 @@ module.exports = {
     themes: false,
   },
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        roboto: ["Roboto"],
+        lobster: ["Lobster"],
+        dancing: ["Dancing Script"],
+      },
+    },
   },
   plugins: [require("daisyui")],
 };

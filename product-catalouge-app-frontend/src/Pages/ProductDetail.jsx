@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+import { toast } from "react-hot-toast";
 import { FaCheck, FaMinus, FaMoneyBillWave } from "react-icons/fa";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import Heading from "../components/core/Heading";
@@ -6,25 +8,32 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const product = useLoaderData();
 
-  console.log(product);
+  // console.log(product);
 
-  const handledelete = async (id) => {
-    console.log(id);
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/products/${id}/delete`,
-        {
-          method: "DELETE",
+  const handledelete = useCallback(
+    async (id) => {
+      // console.log(id);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_END_POINT}api/products/${id}/delete`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Token ${localStorage.getItem("auth_token")}`,
+            },
+          }
+        );
+        const data = await response.json();
+        if (response.ok) {
+          toast.success("Delete Successful");
+          navigate("/allproducts");
         }
-      );
-      const data = await response.json();
-      if (response.ok) {
-        navigate("/allproducts");
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    },
+    [navigate]
+  );
 
   return (
     <>
@@ -46,7 +55,7 @@ const ProductDetail = () => {
                   viewBox="0 0 20 104"
                   fill="currentColor"
                 >
-                  <polygon points="17.3036738 5.68434189e-14 20 5.68434189e-14 20 104 0.824555778 104" />
+                  {/* <polygon points="17.3036738 5.68434189e-14 20 5.68434189e-14 20 104 0.824555778 104" /> */}
                 </svg>
               </div>
               <div className="flex flex-col justify-center p-8 bg-white lg:p-16 lg:pl-10 lg:w-1/2">

@@ -1,46 +1,57 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/core/Button";
 import Heading from "../components/core/Heading";
+import useAuth from "../Hooks/useAuth";
 
 const AddProduct = () => {
   const [activeState, setActiveState] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const description = form.description.value;
-    const price = form.price.value;
-    const picture = form.picture.value;
+  const { user } = useAuth();
 
-    const newProductObject = {
-      name,
-      description,
-      price,
-      picture,
-      active: activeState,
-    };
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.name.value;
+      const description = form.description.value;
+      const price = form.price.value;
+      const picture = form.picture.value;
 
-    try {
-      const response = await fetch(`http://localhost:8000/api/products/add/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newProductObject),
-      });
+      const newProductObject = {
+        User: user?.id,
+        name,
+        description,
+        price,
+        picture,
+        active: activeState,
+      };
 
-      const data = await response.json();
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_END_POINT}api/products/add/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify(newProductObject),
+          }
+        );
 
-      if (response.ok) {
-        navigate("/allproducts");
+        const data = await response.json();
+
+        if (response.ok) {
+          navigate("/allproducts");
+        }
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    },
+    [activeState, navigate, user]
+  );
 
   return (
     <>
