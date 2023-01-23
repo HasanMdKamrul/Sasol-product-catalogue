@@ -45,7 +45,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params: { id } }) =>
-          fetch(`${process.env.REACT_APP_API_END_POINT}api/products/${id}/`, {
+          fetch(`http://127.0.0.1:8000/api/products/${id}/`, {
             headers: {
               Authorization: `Token ${localStorage.getItem("auth_token")}`,
             },
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params: { id } }) =>
-          fetch(`${process.env.REACT_APP_API_END_POINT}api/products/${id}`, {
+          fetch(`http://127.0.0.1:8000/api/products/${id}`, {
             headers: {
               Authorization: `Token ${localStorage.getItem("auth_token")}`,
             },

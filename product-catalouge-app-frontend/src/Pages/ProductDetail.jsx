@@ -15,7 +15,7 @@ const ProductDetail = () => {
       // console.log(id);
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_END_POINT}api/products/${id}/delete`,
+          `http://127.0.0.1:8000/api/products/${id}/delete`,
           {
             method: "DELETE",
             headers: {

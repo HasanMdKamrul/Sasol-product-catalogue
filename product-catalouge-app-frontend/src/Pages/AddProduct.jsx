@@ -30,7 +30,7 @@ const AddProduct = () => {
 
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_END_POINT}api/products/add/`,
+          `http://127.0.0.1:8000/api/products/add/`,
           {
             method: "POST",
             headers: {
